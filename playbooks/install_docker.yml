@@ -1,0 +1,8 @@
+---
+- include: "set_variables.yml"
+
+- name: Apply Docker on the data nodes
+  hosts: hadoop-cluster
+  become: yes
+  roles:
+    -  mongrelion.docker

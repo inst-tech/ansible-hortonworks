@@ -1,5 +1,5 @@
 ---
-cluster_name: 'mytestcluster'
+cluster_name: 'tsdbio'
 
 ambari_version: '2.5.2.0'                                 # must be the 4-part full version number
 hdp_version: '2.6.2.0'                                    # must be the 4-part full version number

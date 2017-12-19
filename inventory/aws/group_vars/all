@@ -1,13 +1,13 @@
 ---
 cloud_config:
-  region: 'eu-west-1'
-  zone: 'eu-west-1a'
+  region: 'us-east-1'
+  zone: 'us-east-1a'
   vpc_name: "{{ cluster_name }}-vpc"
-  vpc_cidr: '10.0.0.0/16'
+  vpc_cidr: '10.51.0.0/20'
   subnet_name: '{{ cluster_name }}-subnet'
-  subnet_cidr: '10.0.10.0/24'
+  subnet_cidr: '10.51.10.0/24'
   internet_gateway: true                                           # Only set to false if using local repos (node will be without Internet access)
-  admin_username: ec2-user
+  admin_username: centos
   ssh:
     keyname: "{{ cluster_name }}-key"
     publickey: '~/.ssh/id_rsa.pub'
@@ -15,31 +15,53 @@ cloud_config:
   security_groups:
     - name: ambari_access
       rules:
-        - {"proto":"tcp", "from_port":"8080", "to_port":"8080", "cidr_ip":"0.0.0.0/0"}
+        - {"proto":"tcp", "from_port":"8080", "to_port":"8080", "cidr_ip":"35.168.120.168/32"}
       description: "Ambari access - {{ cluster_name }}"
     - name: default_cluster_access
       rules:
+        - {"proto":"tcp", "from_port":"22", "to_port":"22", "cidr_ip":"35.168.120.168/32"}
         - {"proto":"tcp", "from_port":"22", "to_port":"22", "cidr_ip":"0.0.0.0/0"}
         - {"proto":"all", "group_name":"default_cluster_access"}
       description: "SSH and inter-nodes access - {{ cluster_name }}"
 
 nodes:
-  - role: "hdp-master"
+  - role: "hdp-master1"
     count: 1
-    image: ami-7d50491b                                            # Amazon Linux AMI 2017.03.1 in eu-west-1
-    type: r3.xlarge
+    image: ami-02e98f78                                            # Amazon Linux AMI 2017.03.1 in us-east-1
+    type: m3.xlarge
     public_ip: true
-    security_groups: default_cluster_access,ambari_access
+    security_groups: default_cluster_access
     root_volume:
       ebs: true                                                    # non-EBS root volumes are not supported at the moment
       type: gp2
       size: 15
-    ambari_server: true
+
+  - role: "hdp-master2"
+    count: 1
+    image: ami-02e98f78                                            # Amazon Linux AMI 2017.03.1 in us-east-1
+    type: m3.xlarge
+    public_ip: true
+    security_groups: default_cluster_access
+    root_volume:
+      ebs: true                                                    # non-EBS root volumes are not supported at the moment
+      type: gp2
+      size: 15
+
+  - role: "hdp-master3"
+    count: 1
+    image: ami-02e98f78                                            # Amazon Linux AMI 2017.03.1 in us-east-1
+    type: m3.xlarge
+    public_ip: true
+    security_groups: default_cluster_access
+    root_volume:
+      ebs: true                                                    # non-EBS root volumes are not supported at the moment
+      type: gp2
+      size: 15
 
   - role: "hdp-slave"
-    count: 3
-    image: ami-7d50491b                                            # Amazon Linux AMI 2017.03.1 in eu-west-1
-    type: r3.large
+    count: 5
+    image: ami-02e98f78                                            # Amazon Linux AMI 2017.03.1 in us-east-1
+    type: m3.large
     public_ip: true
     security_groups: default_cluster_access
     root_volume:
@@ -48,12 +70,13 @@ nodes:
       size: 15
 
   - role: "hdp-edge"
-    count: 0
-    image: ami-7d50491b                                            # Amazon Linux AMI 2017.03.1 in eu-west-1
-    type: m3.medium
+    count: 1
+    image: ami-02e98f78                                            # Amazon Linux AMI 2017.03.1 in us-east-1
+    type: m3.xlarge
     public_ip: true
-    security_groups: default_cluster_access
+    security_groups: default_cluster_access,ambari_access
     root_volume:
       ebs: true                                                    # non-EBS root volumes are not supported at the moment
       type: gp2
-      size: 10
+      size: 15
+    ambari_server: true
