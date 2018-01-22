@@ -465,6 +465,7 @@
         "fs.defaultFS" : "hdfs://{{ cluster_name }}",
         "ha.zookeeper.quorum" : "{% for zk in zookeeper_groups %}%HOSTGROUP::{{ zk }}%:2181{% if not loop.last %},{% endif %}{% endfor %}",
         {% endif -%}
+        "dfs.data.dir": "/data/1/dfs",
 {% if (security|lower == "mit-kdc" or security|lower == "active-directory") and security_options.http_authentication|default(no) %}
         "hadoop.http.authentication.simple.anonymous.allowed" : "false",
         "hadoop.http.authentication.signature.secret.file" : "/etc/security/http_secret",

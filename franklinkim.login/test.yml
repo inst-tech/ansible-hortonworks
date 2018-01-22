@@ -1,0 +1,7 @@
+---
+
+- hosts: all
+  roles:
+    - franklinkim.login
+  vars:
+    login_umask: 002

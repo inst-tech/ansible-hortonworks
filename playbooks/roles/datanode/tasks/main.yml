@@ -1,0 +1,20 @@
+---
+- name: Create Ephemeral Filesystem
+  filesystem: fstype=ext4 dev=/dev/xvdb
+  register: formattedephemeral
+
+- name: Create Mountpoint for Ephemeral Filesystem
+  file:
+    path: "{{ item.dest }}"
+    mode: "{{item.mode}}"
+    state: directory
+  with_items:
+    - { dest: '/hadoop', mode: '0750'}
+    - { dest: '/hadoop/hdfs', mode: '0750'}
+    - { dest: '/hadoop/hdfs/data', mode: '0750'}
+  when: formattedephemeral
+  register: datadir
+
+- name: Mount Ephemeral Filesystem
+  mount: path=/hadoop/hdfs/data src=/dev/xvdb fstype=ext4 state=present
+  when: datadir

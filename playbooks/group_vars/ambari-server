@@ -57,19 +57,25 @@ blueprint_dynamic:                                              # properties for
     clients: ['ZOOKEEPER_CLIENT', 'HDFS_CLIENT', 'INFRA_SOLR_CLIENT', 'HBASE_CLIENT']
     services:
       - ZOOKEEPER_SERVER
+      - ZKFC
+      - JOURNALNODE
       - NAMENODE
       - METRICS_MONITOR
   - role: "hdp-master2"
     clients: ['ZOOKEEPER_CLIENT', 'HDFS_CLIENT', 'INFRA_SOLR_CLIENT', 'HBASE_CLIENT']
     services:
       - ZOOKEEPER_SERVER
-      - SECONDARY_NAMENODE
       - HBASE_MASTER
+      - NAMENODE
+      - ZKFC
+      - JOURNALNODE
       - METRICS_MONITOR
   - role: "hdp-master3"
     clients: ['ZOOKEEPER_CLIENT', 'HDFS_CLIENT', 'INFRA_SOLR_CLIENT', 'HBASE_CLIENT']
     services:
       - ZOOKEEPER_SERVER
+      - ZKFC
+      - JOURNALNODE
       - HBASE_MASTER
       - METRICS_MONITOR
   - role: "hdp-slave"
