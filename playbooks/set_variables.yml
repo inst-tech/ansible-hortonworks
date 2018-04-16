@@ -16,6 +16,9 @@
       set_fact:
         namenode_groups: []
         datanode_groups: []
+        k8s_master_groups: []
+        k8s_client_groups: []
+        k8s_node_groups: []
         resourcemanager_groups: []
         journalnode_groups: []
         zookeeper_groups: []
@@ -43,6 +46,27 @@
         set_fact:
           datanode_groups: "{{ datanode_groups }} + [ '{{ item.role }}' ]"
         when: groups[item.role] is defined and groups[item.role]|length > 0 and 'DATANODE' in item.services
+        with_items: "{{ hostvars[groups['ambari-server']|sort|list|first]['blueprint_dynamic'] }}"
+        no_log: True
+
+      - name: Populate the datanode groups list
+        set_fact:
+          k8s_master_groups: "{{ k8s_master_groups }} + [ '{{ item.role }}' ]"
+        when: groups[item.role] is defined and groups[item.role]|length > 0 and 'K8S_MASTER' in item.services
+        with_items: "{{ hostvars[groups['ambari-server']|sort|list|first]['blueprint_dynamic'] }}"
+        no_log: True
+
+      - name: Populate the k8s_client groups list
+        set_fact:
+          k8s_client_groups: "{{ k8s_client_groups }} + [ '{{ item.role }}' ]"
+        when: groups[item.role] is defined and groups[item.role]|length > 0 and 'K8S_CLIENT' in item.services
+        with_items: "{{ hostvars[groups['ambari-server']|sort|list|first]['blueprint_dynamic'] }}"
+        no_log: True
+
+      - name: Populate the k8s_node groups list
+        set_fact:
+          k8s_node_groups: "{{ k8s_node_groups }} + [ '{{ item.role }}' ]"
+        when: groups[item.role] is defined and groups[item.role]|length > 0 and 'K8S_NODE' in item.services
         with_items: "{{ hostvars[groups['ambari-server']|sort|list|first]['blueprint_dynamic'] }}"
         no_log: True
 

@@ -1,0 +1,50 @@
+---
+- include: "set_variables.yml"
+- hosts: hadoop-cluster
+  tasks:
+  - name: Unmounting /mnt
+    mount: name=/mnt src=/dev/xvdb fstype=ext4 state=absent
+    become: true
+  
+  - name: Loading list of devices
+    uri:
+      url: "http://169.254.169.254/2016-06-30/meta-data/block-device-mapping/"
+      return_content: yes
+    register: devices
+    become: true
+
+  - name: Load ephemeral device names
+    uri:
+      url: "http://169.254.169.254/2016-06-30/meta-data/block-device-mapping/{{item}}"
+      return_content: yes
+    with_items: "{{devices.content.split('\n')}}"
+    when: item.startswith('ephemeral')
+    register: device_names
+    become: true
+
+  - name: Create list of device names
+    set_fact:
+      ephs: "{{ device_names.results | selectattr('content', 'defined') | map(attribute='content') | map('regex_replace', '^sd', '/dev/xvd') | list }}"
+    become: true
+
+  - name: ensure LVM tools are present
+    yum:
+      name: lvm2
+      state: latest
+    become: true
+
+  - name: Create volume group
+    lvg: vg=vg.eph pvs="/dev/{{ephs | join(',/dev/')}}" state=present
+    become: true
+
+  - name: Create logical volume
+    lvol: vg=vg.eph lv=eph size=100%VG state=present opts="-i{{ephs | length}}"
+    become: true
+
+  - name: Format logical volume
+    filesystem: fstype=ext4 dev=/dev/vg.eph/eph
+    become: true
+
+  - name: Mount logical volume
+    mount: name=/hadoop src=/dev/vg.eph/eph fstype=ext4 state=mounted
+    become: true

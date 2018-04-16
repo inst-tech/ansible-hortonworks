@@ -2,11 +2,13 @@
 
 cloud_config:
   region: 'us-east-1'
-  zone: 'us-east-1a'
-  vpc_name: "{{ cluster_name }}-vpc"
-  vpc_cidr: '10.51.0.0/20'
-  subnet_name: '{{ cluster_name }}-subnet'
+  zone: 'us-east-1c'
+  vpc_name: "Perspica Production East"
+  vpc_cidr: '10.154.32.0/20'
+  vpc_id: 'vpc-deebeda6'
+  subnet_name: 'saas-private-c'
   subnet_cidr: '10.51.10.0/24'
+  subnet_id: 'subnet-acf169f1'
   internet_gateway: true                                           # Only set to false if using local repos (node will be without Internet access)
   admin_username: centos
   ssh:
@@ -31,7 +33,7 @@ nodes:
     count: 1
     image: ami-02e98f78                                            # Amazon Linux AMI 2017.03.1 in us-east-1
     type: m3.large
-    public_ip: true
+    public_ip: false
     security_groups: default_cluster_access
     root_volume:
       ebs: true                                                    # non-EBS root volumes are not supported at the moment
@@ -42,7 +44,7 @@ nodes:
     count: 1
     image: ami-02e98f78                                            # Amazon Linux AMI 2017.03.1 in us-east-1
     type: m3.large
-    public_ip: true
+    public_ip: false
     security_groups: default_cluster_access
     root_volume:
       ebs: true                                                    # non-EBS root volumes are not supported at the moment
@@ -53,7 +55,7 @@ nodes:
     count: 1
     image: ami-02e98f78                                            # Amazon Linux AMI 2017.03.1 in us-east-1
     type: m3.large
-    public_ip: true
+    public_ip: false
     security_groups: default_cluster_access
     root_volume:
       ebs: true                                                    # non-EBS root volumes are not supported at the moment
@@ -64,7 +66,7 @@ nodes:
     count: 5
     image: ami-02e98f78                                            # Amazon Linux AMI 2017.03.1 in us-east-1
     type: d2.xlarge  
-    public_ip: true
+    public_ip: false
     datanode: true
     security_groups: default_cluster_access
     root_volume:
@@ -76,7 +78,7 @@ nodes:
     count: 1
     image: ami-02e98f78                                            # Amazon Linux AMI 2017.03.1 in us-east-1
     type: m3.large
-    public_ip: true
+    public_ip: false
     security_groups: default_cluster_access,ambari_access
     root_volume:
       ebs: true                                                    # non-EBS root volumes are not supported at the moment

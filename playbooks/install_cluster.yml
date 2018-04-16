@@ -1,4 +1,6 @@
 ---
+- include: "prepare_node_storage.yml"
+
 - include: "prepare_nodes.yml"
 
 - include: "install_ambari.yml"

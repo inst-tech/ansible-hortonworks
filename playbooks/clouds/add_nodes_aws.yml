@@ -1,6 +1,10 @@
 ---
 - set_fact: outer_loop="{{ item }}"
 
+- name: Display all variables/facts known for a host
+  debug:
+    var: groups
+    verbosity: 4
 - name: Add nodes to hadoop-cluster and {{ outer_loop.role }} groups
   add_host:
     name: "{{ hostvars[local_loop].ec2_dns_name }}"
@@ -41,4 +45,46 @@
   loop_control:
     loop_var: local_loop
   when: outer_loop.count > 0 and outer_loop.datanode is defined and outer_loop.datanode
+  with_items: "{{ groups[('tag_Group_'~cluster_name~'-'~outer_loop.role)|replace('-','_')] }}"
+
+- name: Add node to k8s-master group
+  add_host:
+    name: "{{ hostvars[local_loop].ec2_dns_name }}"
+    ansible_host: "{{ (outer_loop.public_ip|default(false)== true) | ternary(hostvars[local_loop].ec2_ip_address,hostvars[local_loop].ec2_private_ip_address) }}"
+    ansible_ssh_host: "{{ (outer_loop.public_ip|default(false)== true) | ternary(hostvars[local_loop].ec2_ip_address,hostvars[local_loop].ec2_private_ip_address) }}"
+    ansible_user: "{{ cloud_config.admin_username|default('root') }}"
+    ansible_ssh_private_key_file: "{{ cloud_config.ssh.privatekey }}"
+    ansible_become_user: root
+    groups: k8s-master
+  loop_control:
+    loop_var: local_loop
+  when: outer_loop.count > 0 and outer_loop.k8s_master is defined and outer_loop.k8s_master
+  with_items: "{{ groups[('tag_Group_'~cluster_name~'-'~outer_loop.role)|replace('-','_')] }}"
+
+- name: Add node to k8s-node group
+  add_host:
+    name: "{{ hostvars[local_loop].ec2_dns_name }}"
+    ansible_host: "{{ (outer_loop.public_ip|default(false)== true) | ternary(hostvars[local_loop].ec2_ip_address,hostvars[local_loop].ec2_private_ip_address) }}"
+    ansible_ssh_host: "{{ (outer_loop.public_ip|default(false)== true) | ternary(hostvars[local_loop].ec2_ip_address,hostvars[local_loop].ec2_private_ip_address) }}"
+    ansible_user: "{{ cloud_config.admin_username|default('root') }}"
+    ansible_ssh_private_key_file: "{{ cloud_config.ssh.privatekey }}"
+    ansible_become_user: root
+    groups: k8s-node
+  loop_control:
+    loop_var: local_loop
+  when: outer_loop.count > 0 and outer_loop.k8s_node is defined and outer_loop.k8s_node
+  with_items: "{{ groups[('tag_Group_'~cluster_name~'-'~outer_loop.role)|replace('-','_')] }}"
+
+- name: Add node to k8s-client group
+  add_host:
+    name: "{{ hostvars[local_loop].ec2_dns_name }}"
+    ansible_host: "{{ (outer_loop.public_ip|default(false)== true) | ternary(hostvars[local_loop].ec2_ip_address,hostvars[local_loop].ec2_private_ip_address) }}"
+    ansible_ssh_host: "{{ (outer_loop.public_ip|default(false)== true) | ternary(hostvars[local_loop].ec2_ip_address,hostvars[local_loop].ec2_private_ip_address) }}"
+    ansible_user: "{{ cloud_config.admin_username|default('root') }}"
+    ansible_ssh_private_key_file: "{{ cloud_config.ssh.privatekey }}"
+    ansible_become_user: root
+    groups: k8s-client
+  loop_control:
+    loop_var: local_loop
+  when: outer_loop.count > 0 and outer_loop.k8s_client is defined and outer_loop.k8s_client
   with_items: "{{ groups[('tag_Group_'~cluster_name~'-'~outer_loop.role)|replace('-','_')] }}"

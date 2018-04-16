@@ -1,0 +1,792 @@
+(ansible)[centos@ip-10-96-1-35 ansible-hortonworks]$ history
+    1  sudo yum update -y
+    2  sudo yum -y install epel-release || sudo yum -y install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    3  sudo yum -y install gcc gcc-c++ python-virtualenv python-pip python-devel libffi-devel openssl-devel sshpass git vim-enhanced
+    4  virtualenv ~/ansible; source ~/ansible/bin/activate
+    5  pip install setuptools --upgrade
+    6  pip install pip --upgrade
+    7  pip install pycparser ansible==2.3.2 boto
+    8  dev tun2
+    9  tls-server
+   10  dh /etc/openvpn/ssl/dh2048.pem
+   11  ca /etc/openvpn/ssl/ca-chain.pem
+   12  cert /etc/openvpn/ssl/vpn.tsdb.io.cert.pem
+   13  key /etc/openvpn/ssl/vpn.tsdb.io.key.pem
+   14  server 172.29.5.0 255.255.255.0
+   15  log /var/log/openvpn.log
+   16  comp-lzo
+   17  cipher AES-256-CBC
+   18  script-security 2
+   19  route-up "/sbin/ifconfig tun2 up"
+   20  port 443
+   21  proto tcp-server
+   22  push "route 10.50.0.0 255.255.0.0"
+   23  push "dhcp-option DNS 10.50.0.2"
+   24  push "dhcp-option NTP pool.ntp.org"
+   25  push "dhcp-option DOMAIN tsdb.io"
+   26  push "dhcp-option SEARCH tsdb.io"
+   27  push "dhcp-option PROXY_HTTP 172.31.9.28 3128"
+   28  push "dhcp-option HTTPPROXY 172.31.9.28:3128"
+   29  push "dhcp-option HTTPSPROXY 172.31.9.28:3128"
+   30  push "dhcp-option PROXY_HTTPS 172.31.9.28 3128"
+   31  push "dhcp-option PROXY_BYPASS vpn.tsdb.io"
+   32  #push "dhcp-option PROXY_AUTO_CONFIG_URL http://www.perspica.io/proxy.pac"
+   33  push "redirect-gateway def1"
+   34  push "remote-gateway 10.50.0.1"
+   35  push "cipher AES-256-CBC"
+   36  client-to-client
+   37  keepalive 10 120
+   38  cipher AES-256-CBC
+   39  auth SHA512
+   40  max-clients 10
+   41  user nobody
+   42  group nobody
+   43  persist-key
+   44  persist-tun
+   45  ssh-keygen -q -t -rsa
+   46  ssh-keygen -q -t rsa
+   47  nano .access
+   48  sudo yum install -y nano
+   49  nano .access
+   50  cd && git clone https://github.com/hortonworks/ansible-hortonworks.git
+   51  source ~/.access
+   52  nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+   53  nano ~/ansible-hortonworks/playbooks/group_vars/all
+   54  nano ~/ansible-hortonworks/playbooks/group_vars/ambari-server
+   55  nano ~/ansible-hortonworks/playbooks/group_vars/all
+   56  nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+   57  nano ~/ansible-hortonworks/playbooks/group_vars/all
+   58  nano ~/ansible-hortonworks/playbooks/group_vars/ambari-server
+   59  nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+   60  export CLOUD_TO_USE=aws
+   61  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+   62  nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+   63  nano ~/ansible-hortonworks/playbooks/group_vars/ambari-server
+   64  nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+   65  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+   66  nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+   67  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+   68  nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+   69  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+   70  ssh 10.51.10.61
+   71  ssh 10.51.10.61 -l centos
+   72  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+   73  ssh 10.51.10.61 -l centos
+   74  ssh 54.234.34.188
+   75  ssh 54.147.82.230
+   76  nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+   77  nano ~/ansible-hortonworks/playbooks/group_vars/ambari-server
+   78  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+   79  export CLOUD_TO_USE=aws
+   80  cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+   81  nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+   82  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+   83  cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+   84  nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+   85  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+   86  cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+   87  nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+   88  nano ~/ansible-hortonworks/playbooks/group_vars/ambari-server
+   89  cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+   90  source ~/.access
+   91  ks
+   92  ls
+   93  source ~/ansible/bin/activate
+   94  cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+   95  export CLOUD_TO_USE=aws
+   96  cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+   97  cd ~/ansible-hortonworks*/ && bash install_cluster.sh  --limit @/home/centos/ansible-hortonworks/playbooks/install_cluster.retry
+   98  nano ~/ansible-hortonworks/playbooks/group_vars/all
+   99  nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+  100  nano ~/ansible-hortonworks/playbooks/group_vars/ambari-server
+  101  export CLOUD_TO_USE=aws
+  102  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  103  cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  104  ls
+  105  nano build_cloud.sh
+  106  nano playbooks/install_cluster.yml
+  107  nano playbooks/install_ambari.yml
+  108  nano playbooks/install_docker.yml
+  109  grep -Ri 'hdp-slave' playbooks/*
+  110  nano playbooks/group_vars/ambari-server
+  111  nano playbooks/install_docker.yml
+  112  nano playbooks/install_ambari.yml
+  113  nano playbooks/set_variables.yml
+  114  nano playbooks/install_docker.yml
+  115  nano playbooks/set_variables.yml
+  116  nano playbooks/install_ambari.yml
+  117  nano playbooks/set_variables.yml
+  118  nano playbooks/install_ambari.yml
+  119  nano playbooks/install_docker.yml
+  120  nano build_cloud.sh
+  121  ansible-playbook --connection=local "playbooks/install_docker.yml"
+  122  nano build_cloud.sh
+  123  nano playbooks/install_docker.yml
+  124  ansible-playbook --connection=local "playbooks/install_docker.yml"
+  125  cd playbooks/
+  126  ansible-galaxy install mongrelion.docker
+  127  sudo ansible-galaxy install mongrelion.docker
+  128  nano install_docker.yml
+  129  ansible-galaxy install mongrelion.docker
+  130  which ansible-galaxy
+  131  ansible-galaxy install mongrelion.docker --help
+  132  nano requirements.yml
+  133  ansible-galaxy --roles-path . install mongrelion.docker
+  134  ls
+  135  nano install_docker.yml
+  136  cd ..
+  137  ansible-playbook --connection=local "playbooks/install_docker.yml"
+  138  nano install_docker.yml
+  139  nano playbooks/install_docker.
+  140  nano playbooks/install_docker.yml
+  141  ansible-playbook --connection=local "playbooks/install_docker.yml"
+  142  nano playbooks/install_docker.yml
+  143  nano playbooks/install_ambari.yml
+  144  nano playbooks/install_docker.yml
+  145  ansible-playbook --connection=local "playbooks/install_docker.yml"
+  146  nano build_cloud.sh
+  147  nano install_docker.sh
+  148  chmod ./install_docker.sh
+  149  chmod 750 ./install_docker.sh
+  150  cd ~/ansible-hortonworks*/ && bash install_docker.sh
+  151  nano playbooks/install_ambari.yml
+  152  nano install_docker.sh
+  153  nano playbooks/install_docker.
+  154  nano playbooks/install_docker.yml
+  155  cd ~/ansible-hortonworks*/ && bash install_docker.sh
+  156  cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  157  nano /home/centos/ansible-hortonworks/playbooks/clouds/add_nodes_aws.yml
+  158  nano playbooks/install_cluster.yml
+  159  nano install_cluster.sh
+  160  nano playbooks/install_cluster.yml
+  161  nano install_cluster.sh
+  162  nano install_docker.sh
+  163  cd ~/ansible-hortonworks*/ && bash install_docker.sh
+  164  nano playbooks//install_docker.
+  165  nano playbooks//install_docker.yml
+  166  cd ~/ansible-hortonworks*/ && bash install_docker.sh
+  167  nano playbooks//install_docker.yml
+  168  nano playbooks/prepare_nodes.yml
+  169  grep -Ri 'yum' *
+  170  nano playbooks/roles/database/vars/redhat-7.yml
+  171  nano playbooks/mongrelion.docker/tasks/os/RedHat.yml
+  172  nano playbooks//install_docker.yml
+  173  cd ~/ansible-hortonworks*/ && bash install_docker.sh
+  174  nano playbooks//install_docker.yml
+  175  cd ~/ansible-hortonworks*/ && bash install_docker.sh
+  176  nano playbooks/install_docker.
+  177  nano playbooks/install_docker.yml
+  178  cd ~/ansible-hortonworks*/ && bash install_docker.sh
+  179  sudo docker ps
+  180  ssh 34.201.73.211
+  181  nano playbooks/mongrelion.docker/templates/docker.j2.service
+  182  cd ~/ansible-hortonworks*/ && bash install_docker.sh
+  183  ssh 34.201.73.211
+  184  git sttus
+  185  git status
+  186  nano .gitignore
+  187  git status
+  188  git add .gitignore
+  189  git add install_docker.sh
+  190  git add playbooks/install_docker.yml
+  191  git status
+  192  git remote rm origin
+  193  git remote add origin git@github.com:johann8384/ansible-hortonworks.git
+  194  git status
+  195  git commit -a -m 'Working'; git push origin master
+  196  git config --global user.name "Jonathan Creasy"
+  197  git config --global user.email jonathan.creasy@gmail.com
+  198      git commit --amend --reset-author
+  199  git push -f origin master
+  200  git status
+  201  nano playbooks/install_docker.
+  202  nano playbooks/install_docker.yml
+  203  exit
+  204  ls
+  205  history
+  206  cd ansible
+  207  git remote rm origin
+  208  cd ../ansible-hortonworks/
+  209  git remote rm origin
+  210  git remote add origin git@github.com:inst-tech/ansible-hortonworks.git
+  211  cd ../ansible-hortonworks/
+  212  ls
+  213  git checkout -b opentsdb origin/opentsdb
+  214  git fetch --all
+  215  git checkout -b opentsdb origin/opentsdb
+  216  git stash
+  217  git checkout -b opentsdb origin/opentsdb
+  218  rm playbooks/opentsdb_containers.yml
+  219  git checkout -b opentsdb origin/opentsdb
+  220  git status
+  221  cat run.sh
+  222  virtualenv ~/ansible; source ~/ansible/bin/activate
+  223  nano ~/.access
+  224  source ~/.access
+  225  export CLOUD_TO_USE=aws
+  226  history
+  227  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  228  nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+  229  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  230  history | grep create
+  231  history | grep cluster
+  232   cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  233  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  234   cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  235  grep -R 'Cluster' *
+  236  nano inventory/aws/ec2.py
+  237  grep -R 'Cluster' *
+  238  nano playbooks/clouds/build_aws_nodes.ym
+  239  l
+  240  nano playbooks/clouds/build_aws_nodes.yml
+  241  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  242  ls
+  243  nano playbooks/install_cluster.
+  244  nano playbooks/clouds/add_nodes_aws.yml
+  245  cat build_cloud.sh
+  246  nano playbooks/clouds/build_aws.yml
+  247  nano playbooks/clouds/build_aws_nodes.yml
+  248  nano playbooks/prepare_nodes.yml
+  249  nano playbooks/roles/common/tasks/main.yml
+  250  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  251  nano inventory/aws/group_vars/all
+  252  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  253  nano playbooks/roles/common/tasks/main.yml
+  254  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  255   cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  256  ssh 10.51.10.55
+  257  ssh 184.72.117.222
+  258  nano playbooks/roles/common/tasks/main.yml
+  259   cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  260  nano configure_ambari.sh
+  261  nano playbooks/configure_ambari.yml
+  262  grep -Ri 'blueprint'
+  263  ls -lha
+  264  nano playbooks/apply_blueprint.yml
+  265  nano playbooks/configure_ambari.yml
+  266  nano playbooks/roles/ambari-blueprint/templates/cluster_template.j2
+  267  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  268  grep -Ri 'core-site' *
+  269  nano playbooks/group_vars/all
+  270  history | grep vars
+  271  nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+  272  nano nano ~/ansible-hortonworks/playbooks/group_vars/ambari-server
+  273  nano playbooks/roles/ambari-blueprint/templates/blueprint_dynamic.j2
+  274  nano playbooks/roles/common/tasks/main.yml
+  275   cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  276  nano playbooks/roles/common/tasks/main.yml
+  277  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  278   cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  279  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  280   cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  281  nano playbooks/roles/common/tasks/main.yml
+  282  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  283   cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  284  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  285  git status
+  286  git diff
+  287  nano playbooks/roles/common/tasks/main.yml
+  288  nano playbooks/roles/ambari-agent/tasks/main.yml
+  289  grep -Ri 'ambari-agent' *
+  290  nano playbooks/install_ambari.yml
+  291  grep -Ri 'instll_ambari' *
+  292  grep -Ri 'install_ambari' *
+  293  nnano playbooks/install_cluster.
+  294  nnano playbooks/install_cluster.yml
+  295  nano playbooks/install_cluster.yml
+  296  nano playbooks/prepare_nodes.yml
+  297  nano set_cloud.sh
+  298  nano playbooks/set_variables.yml
+  299  nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+  300  grep -Ri 'hdp-slave' *
+  301  nano playbooks/group_vars/ambari-server
+  302  nano playbooks/set_variables.yml
+  303  grep -Ri 'namenode' *
+  304  nano playbooks/group_vars/ambari-server
+  305  nano playbooks/group_vars/example-hdp-ha-3-masters
+  306  cat playbooks/group_vars/example-hdp-ha-3-masters
+  307  nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+  308  nano playbooks/group_vars/ambari-server
+  309  cat playbooks/group_vars/example-hdp-ha-3-masters
+  310  grep -Ri 'namenode' *
+  311  grep -Ri 'group' *
+  312  nano playbooks/set_variables.yml
+  313  grep -Ri 'resourcemanager' *
+  314  ls
+  315  nano playbooks/install_cluster.yml
+  316  nano playbooks/install_ambari.yml
+  317  nano playbooks/install_cluster.yml
+  318  nano playbooks/prepare_nodes.yml
+  319  nano playbooks/set_variables.yml
+  320  grep -Ri 'zookeeper_hosts' 8
+  321  grep -Ri 'zookeeper_hosts' *
+  322  nano playbooks/prepare_nodes.yml
+  323  grep -Ri 'hadoop-nodes' *
+  324  grep -Ri 'zookeeper_hosts' *
+  325  nano playbooks/prepare_nodes.yml
+  326  grep -Ri 'hadoop-cluster' *
+  327  nano playbooks/clouds/add_nodes_aws.yml
+  328  grep -Ri  ambari_server' *
+  329  grep -Ri  'ambari_server' *
+  330  nano INSTALL_static.md:| ambari_server                 | Set it to `true` for the host that should also run the Ambari Server.                                       |
+  331  nano inventory/aws/group_vars/all
+  332  nano playbooks/clouds/add_nodes_aws.yml
+  333  nano playbooks/prepare_nodes.yml
+  334  nano playbooks/roles/common/
+  335  nano playbooks/roles/common/tasks/main.yml
+  336  mkdir -p playbooks/roles/datanode/tasks
+  337  nano playbooks/roles/datanode/tasks/main.yml
+  338  nano playbooks/roles/common/tasks/main.yml
+  339  nano playbooks/roles/datanode/tasks/main.yml
+  340  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  341  grep -Ri 'role' *
+  342  grep -Ri 'role' cluster
+  343  grep -Ri 'cluster' *
+  344  nano playbooks/clouds/add_nodes_aws.yml
+  345  nano playbooks/clouds/build_aws_nodes.yml
+  346  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  347  nano playbooks/clouds/build_aws_nodes.yml
+  348  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  349  nano playbooks/clouds/build_aws_nodes.yml
+  350  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  351  nano playbooks/clouds/build_aws_nodes.yml
+  352  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  353  nano playbooks/clouds/build_aws_nodes.yml
+  354  git satus
+  355  git diff playbooks/clouds/build_aws_nodes.yml
+  356  nano playbooks/clouds/build_aws_nodes.yml
+  357  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  358  nano playbooks/clouds/build_aws_nodes.yml
+  359  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  360  nano playbooks/clouds/build_aws_nodes.yml
+  361  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  362  nano playbooks/clouds/build_aws_nodes.yml
+  363  git diff playbooks/clouds/build_aws_nodes.yml
+  364  git checkout playbooks/clouds/build_aws_nodes.yml
+  365  nano playbooks/clouds/build_aws_nodes.yml
+  366  git diff playbooks/clouds/build_aws_nodes.yml
+  367  cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  368   cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  369  git status
+  370  rm playbooks/opentsdb_containers.yml.save
+  371  git status
+  372  git diff playbooks/set_variables.yml
+  373  nano playbooks/set_variables.yml
+  374  rm playbooks/opentsdb_containers.yml.save
+  375   cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  376  nano playbooks/roles/datanode/tasks/main.yml
+  377  nano playbooks/roles/common/tasks/main.yml
+  378  nano playbooks/roles/datanode/tasks/main.yml
+  379  nano playbooks/roles/common/tasks/main.yml
+  380  nano playbooks/roles/datanode/tasks/main.yml
+  381   cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  382  nano playbooks/roles/datanode/tasks/main.yml
+  383   cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  384  nano playbooks/set_variables.yml
+  385  grep -Ri 'namenode_groups' *
+  386  nano playbooks/set_variables.yml
+  387   cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  388  ssh 54.89.196.86
+  389  nano playbooks/roles/datanode/tasks/main.yml
+  390   cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  391  nano playbooks/roles/datanode/tasks/main.yml
+  392   cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  393  screen
+  394  sudo yum install screen
+  395  screen
+  396  history
+  397  screen
+  398  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  399  exit
+  400  screen -r
+  401  exit
+  402  screen
+  403  screen -r
+  404  exit
+  405  cat /etc/login.defs
+  406  ssh ec2-54-211-236-233.compute-1.amazonaws.com
+  407  screen
+  408  screen -r
+  409  nano playbooks/roles/datanode/tasks/main.yml
+  410  cd ansible-hortonworks/
+  411  screen -r
+  412  ls
+  413  df -h
+  414  mount
+  415  ls /dev
+  416  exit
+  417  nano playbooks/roles/datanode/tasks/main.yml
+  418  cd ansible-hortonworks/
+  419  nano playbooks/roles/datanode/tasks/main.yml
+  420  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  421  history | grep ansible
+  422  virtualenv ~/ansible; source ~/ansible/bin/activate
+  423  cat run.sh
+  424  export CLOUD_TO_USE=aws
+  425  source ~/.access
+  426  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  427  ssh ip-10-51-10-204.ec2.internal
+  428  ssh 10.51.10.204
+  429  ssh ec2-54-237-250-236.compute-1.amazonaws.com
+  430  nano playbooks/roles/datanode/tasks/main.yml
+  431  ansible-galaxy install franklinkim.login
+  432  sudo ansible-galaxy install franklinkim.login
+  433  history | grep galaxy
+  434  ansible-galaxy --roles-path . install  franklinkim.login
+  435  nano playbooks/roles/datanode/tasks/main.yml
+  436  nano playbooks/roles/common/tasks/main.yml
+  437  nano playbooks/roles/common/templates/login.defs.j2
+  438  nano playbooks/roles/common/tasks/main.yml
+  439  nano playbooks/roles/datanode/tasks/main.yml
+  440  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  441  nano playbooks/roles/datanode/tasks/main.yml
+  442  cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  443  nano playbooks/roles/datanode/tasks/main.yml
+  444  cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  445  nano playbooks/roles/datanode/tasks/main.yml
+  446  cd ~/ansible-hortonworks*/ && bash install_cluster.sh
+  447  sssh ec2-52-91-187-133.compute-1.amazonaws.com
+  448  ssh ec2-52-91-187-133.compute-1.amazonaws.com
+  449  ls
+  450  grep -Ri 'xvda' *
+  451  grep -Ri 'sda' *
+  452  grep -Ri 'xvdb' *
+  453  nano playbooks/clouds/build_aws_nodes.yml
+  454  nano playbooks/roles/datanode/tasks/main.yml
+  455  ls
+  456  nano inventory/aws/group_vars/all
+  457  nano playbooks/clouds/build_aws_nodes.yml
+  458  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  459  nano playbooks/clouds/build_aws_nodes.yml
+  460  nano inventory/aws/group_vars/all
+  461  nano playbooks/clouds/build_aws_nodes.yml
+  462  nano playbooks/roles/datanode/tasks/main.yml
+  463  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  464  git diff
+  465  nano playbooks/roles/datanode/tasks/main.yml
+  466  nano playbooks/clouds/build_aws_nodes.yml
+  467  nano inventory/aws/group_vars/all
+  468  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  469  nano inventory/aws/group_vars/all
+  470  nano playbooks/clouds/add_nodes_aws.yml
+  471  nano playbooks/clouds/build_aws_nodes.yml
+  472  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  473  nano playbooks/clouds/build_aws_nodes.yml
+  474  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  475  nano playbooks/clouds/build_aws_nodes.yml
+  476  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  477  nano playbooks/clouds/build_aws_nodes.yml
+  478  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  479  nano playbooks/clouds/build_aws_nodes.yml
+  480  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  481  nano playbooks/clouds/build_aws_nodes.yml
+  482  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  483  nano playbooks/clouds/build_aws_nodes.yml
+  484  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  485  history | grep ansible
+  486   virtualenv ~/ansible; source ~/ansible/bin/activate
+  487  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  488  ls
+  489  export ansible_python_interpreter=/usr/bin/python2.7
+  490  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  491  sudo yum install python2
+  492  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  493  grep -Ri 'python_interpreter' *
+  494  ls
+  495  nano inventory/aws/ec2.ini
+  496  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  497  nano inventory/aws/ec2.ini
+  498  nano inventory/aws/group_vars/all
+  499  nano inventory/aws/ec2.ini
+  500  nano inventory/aws/group_vars/all
+  501  grep -Ri 'hosts' *
+  502  nano playbooks/set_variables.yml
+  503  grep -Ri 'hosts' *
+  504  nano inventory/aws/ec2.py
+  505  nano inventory/aws/ec2.ini
+  506  nano playbooks/clouds/build_aws_nodes.yml
+  507  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  508  nano playbooks/clouds/build_aws_nodester.sh
+  545  nano inventory/aws/group_vars/all
+  546  nano playbooks/clouds/build_aws_nodes.yml
+  547  nano inventory/aws/group_vars/all
+  548  nano playbooks/clouds/build_aws_nodes.yml
+  549  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  550  nano playbooks/clouds/build_aws_nodes.yml
+  551  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  552  nano playbooks/clouds/build_aws_nodes.yml
+  553  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  554  nano playbooks/clouds/build_aws_nodes.yml
+  555  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  556  git status
+  557  git add playbooks
+  558  git sttus
+  559  git add franklinkim.login/
+  560  git status
+  561  git commit -a -m 'closer'
+  562  git push origin opentsdb
+  563  exit
+  564  exit
+  565  cd ansible-hortonworks/
+  566  git status
+  567  git push origin opentsdb
+  568  git remote show oriign
+  569  git remote show origin
+  570  ssh 52.206.20.26
+  571  history | grep ansible
+  572  virtualenv ~/ansible; source ~/ansible/bin/activate
+  573  history | grep export
+  574  export CLOUD_TO_USE=aws
+  575  history | grep source
+  576  source ~/.access
+  577  git diff HEAD~1
+  578  git status
+  579  ls
+  580  cd ansible-hortonworks/
+  581  git diff HEAD~1
+  582  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  583  nano playbooks/clouds/build_aws_nodes.yml
+  584  grep -Ri 'build_aws_nodes' *
+  585  nano playbooks/clouds/build_aws.
+  586  nano playbooks/clouds/build_aws.y
+  587  nano playbooks/clouds/build_aws_nodes.yml
+  588  grep -Ri 'build_aws_nodes' *
+  589  nano playbooks/clouds/build_aws.yml
+  590  grep -Ri 'build_aws' *
+  591  ls
+  592  nano build_cloud.sh
+  593  nano install_cluster.sh
+  594  nano playbooks/install_cluster.
+  595  nano playbooks/clouds/build_aws.yml
+  596  nano playbooks/install_cluster.yml
+  597  nano playbooks/prepare_nodes.yml
+  598  nano playbooks/clouds/build_aws_volgroup.yml
+  599  nano playbooks/prepare_nodes.yml
+  600  nano playbooks/install_cluster.yml
+  601  ls
+  602  ls playbooks/
+  603  nano playbooks/install_cluster.yml
+  604  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  605  nano playbooks/clouds/build_aws_nodes.yml
+  606  cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  607  nano /home/centos/ansible-hortonworks/inventory/aws/ec2.ini
+  608  bash install_cluster.sh
+  609  nano playbooks/prepare_node_storage.yml
+  610  nano --help
+  611  nano -T2 -e playbooks/prepare_node_storage.yml
+  612  nano -T2 -E playbooks/prepare_node_storage.yml
+  613  bash install_cluster.sh
+  614  nano -T2 -E playbooks/prepare_node_storage.yml
+  615  bash install_cluster.sh
+  616  grep -Ri 'centos' *
+  617  nano -T2 -E playbooks/prepare_node_storage.yml
+  618  bash install_cluster.sh
+  619  nano -T2 -E playbooks/prepare_node_storage.yml
+  620  bash install_cluster.sh
+  621  nano -T2 -E playbooks/prepare_node_storage.yml
+  622  bash install_cluster.sh
+  623  nano -T2 -E playbooks/prepare_node_storage.yml
+  624  bash install_cluster.sh
+  625  nano -T2 -E playbooks/prepare_node_storage.yml
+  626  bash install_cluster.sh
+  627  grep -Ri 'Create Ephemeral Filesystem'
+  628  grep -Ri 'Create Ephemeral Filesystem' *
+  629  nano playbooks/roles/datanode/tasks/main.yml
+  630  rm -rf playbooks/roles/datanode
+  631  bash install_cluster.sh
+  632  nano /home/centos/ansible-hortonworks/playbooks/prepare_nodes.yml
+  633  bash install_cluster.sh
+  634  bash install_docker.sh
+  635  nano install_docker.sh
+  636  nano playbooks/install_docker.
+  637  nano playbooks/install_docker.yml
+  638  nano install_docker.sh
+  639  bash install_docker.sh
+  640  nano playbooks/install_docker.
+  641  nano playbooks/install_docker.sh
+  642  nano playbooks/install_cluster.yml
+  643  nano playbooks/prepare_nodes.yml
+  644  nano playbooks/install_docker.yml
+  645  nano playbooks/set_variables.yml
+  646  grep -Ri 'JOURNALNODE' *
+  647  nano playbooks/group_vars/ambari-server
+  648  nano playbooks/set_variables.yml
+  649  nano playbooks/install_docker.yml
+  650  grep -Ri 'hadoop-cluster' *
+  651  nano playbooks/set_variables.yml
+  652  nano playbooks/group_vars/ambari-server
+  653  nano playbooks/install_docker.yml
+  654  grep -Ri hadoop-cluster *
+  655  nano playbooks/install_ambari.yml
+  656  grep -Ri hadoop-cluster *
+  657  nano playbooks/prepare_node
+  658  nano playbooks/prepare_nodes.yml
+  659  nano playbooks/prepare_node
+  660  grep -Ri hadoop-cluster *
+  661  grep -Ri 'ambari-server' 8
+  662  grep -Ri 'ambari-server' *
+  663  nano playbooks/clouds/add_nodes_aws.yml
+  664  nano playbooks/set_variables.yml
+  665  nano playbooks/clouds/add_nodes_aws.yml
+  666  bash install_docker.sh
+  667  nano /home/centos/ansible-hortonworks/playbooks/install_docker.yml
+  668  grep -Ri 'public' *
+  669  history | grep nanmo
+  670  history | grep nano
+  671   nano ~/ansible-hortonworks/inventory/aws/group_vars/all
+  672  history | grep bash
+  673   cd ~/ansible-hortonworks*/ && bash build_cloud.sh &&  bash install_cluster.sh
+  674  nano build_cloud.sh
+  675  nano playbooks/clouds/build_aws.yml
+  676  nano inventory/aws/group_vars/all
+  677  git diff
+  678  nano inventory/aws/group_vars/all
+  679  nano playbooks/clouds/build_aws.yml
+  680  nano inventory/aws/group_vars/all
+  681  grep -Ri 'vpc_subnet' *
+  682  nano playbooks/clouds/build_aws_nodes.yml
+  683  grep -Ri 'vpc_subnet' *
+  684  nano playbooks/clouds/build_aws_nodes.yml
+  685   cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  686  nano playbooks/clouds/build_aws_nodes.yml
+  687  nano playbooks/clouds/build_aws.yml
+  688   cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  689  nano playbooks/clouds/build_aws.yml
+  690   cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  691  nano playbooks/clouds/build_aws_nodes.yml
+  692   cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  693  bash install_cluster.sh
+  694  nano playbooks/set_variables.yml
+  695  nano playbooks/clouds/add_nodes_aws.yml
+  696  bash install_cluster.sh
+  697  grep -Ri 'odes to hadoop-cluster and hdp-master1'
+  698  grep -Ri 'odes to hadoop-cluster and hdp-master1' *
+  699  grep -Ri 'Add nodes to' *
+  700  nano playbooks/clouds/add_nodes_aws.yml
+  701  grep -Ri 'ec2_dns_name'
+  702  nano inventory/aws/ec2.py
+  703  bash install_cluster.sh
+  704  nano inventory/aws/ec2.py
+  705  nano playbooks/set_variables.yml
+  706  nano playbooks/clouds/add_nodes_aws.yml
+  707  bash install_cluster.sh
+  708  nano playbooks/clouds/add_nodes_aws.yml
+  709  bash install_cluster.sh
+  710  nano playbooks/clouds/add_nodes_aws.yml
+  711  nano inventory/aws/ec2.ini
+  712  bash install_cluster.sh
+  713  nano inventory/aws/ec2.ini
+  714   cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  715  bash install_cluster.sh
+  716  nano playbooks/set_variables.yml
+  717  nano playbooks/clouds/add_nodes_aws.yml
+  718  bash install_cluster.sh
+  719  nano playbooks/clouds/add_nodes_aws.yml
+  720  bash install_cluster.sh
+  721  grep -Ri 'hdp-master1'
+  722  nano inventory/aws/group_vars/all
+  723  grep -Ri 'hdp-master1'
+  724  nano playbooks/group_vars/ambari-server
+  725  nano inventory/aws/group_vars/all
+  726  bash install_cluster.sh
+  727  nano playbooks/set_variables.yml
+  728  nano playbooks/clouds/add_nodes_aws.yml
+  729  bash install_cluster.sh
+  730  bash install_cluster.sh  -v
+  731  bash install_cluster.sh  -vvv
+  732  ansible --help
+  733  nano install_cluster.sh
+  734  bash install_cluster.sh  -vvv
+  735   cd ~/ansible-hortonworks*/ && bash build_cloud.sh
+  736  bash install_cluster.sh  -vvv
+  737  grep -Ri 'Group' *
+  738  grep -R 'Group' *
+  739  grep -R 'tag_Group' *
+  740  nano playbooks/clouds/add_nodes_aws.yml
+  741  grep -R 'Group' *
+  742  nano playbooks/clouds/build_aws.yml
+  743  nano inventory/aws/group_vars/all
+  744  git diff inventory
+  745  git status
+  746  git diff
+  747  grep -Ri 'hdp-master1'
+  748  nano playbooks/group_vars/ambari-server
+  749  bash install_cluster.sh  -vvv
+  750  grep -Ri 'hdp-master1'
+  751  nano playbooks/clouds/add_nodes_aws.yml
+  752  bash install_cluster.sh  | grep 'hdp'
+  753  bash install_cluster.sh  | grep 'hdp' -5
+  754  nano playbooks/group_vars/ambari-server
+  755  nano inventory/aws/group_vars/all
+  756  grep -Ri 'vpc_id' *
+  757  nano inventory/aws/ec2.py
+  758  grep -Ri 'vpc_id' *
+  759  nano playbooks/clouds/build_aws.yml
+  760  nano playbooks/clouds/build_aws_nodes.yml
+  761  bash install_cluster.sh
+  762  nano playbooks/group_vars/ambari-server
+  763  nano playbooks/clouds/add_nodes_aws.yml
+  764  nano inventory/aws/ec2.ini
+  765  source ~/.access
+  766  bash install_cluster.sh
+  767  nano install_cluster.sh
+  768  bash install_cluster.sh
+  769  rm -rf ~/.ansible
+  770  bash install_cluster.sh
+  771  rm -rf ~/.ansible
+  772  git diff
+  773  nano playbooks/clouds/add_nodes_aws.yml
+  774  bash build_cloud.sh
+  775  bash install_cluster.sh
+  776  nano install_cluster.sh
+  777  bash install_cluster.sh
+  778  nano playbooks/install_cluster.yml
+  779  grep -Ri 'xvdc
+  780  grep -Ri 'xvdc'
+  781  nano playbooks/clouds/build_aws_nodes.yml
+  782  git diff playbooks/clouds
+  783  nano playbooks/clouds/build_aws_nodes.yml
+  784  bash install_cluster.sh
+  785  grep -Ri 'create volume group' *
+  786  nano playbooks/prepare_node_St
+  787  nano playbooks/prepare_node_storage.yml
+  788  bash install_cluster.sh
+  789  nano playbooks/prepare_node_storage.yml
+  790  bash install_cluster.sh
+  791  nano playbooks/prepare_node_storage.yml
+  792  bash install_cluster.sh
+  793  nano playbooks/clouds/build_aws_nodes.yml
+  794  bash build_cloud.sh
+  795  bash install_cluster.sh
+  796  nano playbooks/prepare_node_storage.yml
+  797  bash install_cluster.sh
+  798  grep -Ri 'xvdb' *
+  799  nano playbooks/clouds/build_aws_nodes.yml
+  800  bash install_cluster.sh
+  801  grep -Ri 'xvdb' *
+  802  nano playbooks/clouds/build_aws_volgroup.yml
+  803  rm playbooks/clouds/build_aws_volgroup.yml
+  804  nano playbooks/prepare_node_storage.yml
+  805  bash install_cluster.sh
+  806  nano playbooks/prepare_node_storage.yml
+  807  bash install_cluster.sh
+  808  ssh 10.154.38.60
+  809  nano playbooks/prepare_node_storage.yml
+  810  bash install_cluster.sh
+  811  nano playbooks/prepare_node_storage.yml
+  812  grep -Ri prepare
+  813  grep -Ri prepare_node_storage
+  814* nano playbooks/install_cluster.
+  815  nano playbooks/install_cluster.yml
+  816  nano playbooks/prepare_node_storage.yml
+  817  bash install_cluster.sh
+  818  nano playbooks/prepare_node_storage.yml
+  819  bash install_cluster.sh
+  820  nano playbooks/prepare_node_storage.yml
+  821  bash install_cluster.sh
+  822  grep -Ri 'K8S_CLIENT' *
+  823  nano playbooks/group_vars/ambari-server
+  824  bash install_cluster.sh
+  825  nano playbooks/prepare_node_storage.yml
+  826  histroy
+  827  history

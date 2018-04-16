@@ -1,12 +1,3 @@
----
-- include: "set_variables.yml"
-
-- name: Apply Docker on the data nodes
-  hosts: hadoop-cluster
-  become: yes
-  roles:
-    -  mongrelion.docker
-
 - name: Deploy kubernetes Master
   hosts: k8s-master
   remote_user: centos
@@ -16,7 +7,7 @@
   - gbraad.kubernetes-master
 
 - name: Deploy kubernetes Nodes
-  hosts: k8s-node
+  hosts: k8s-nodes
   remote_user: centos
   become: true
   roles:

@@ -13,7 +13,7 @@
     zone: "{{ cloud_config.zone }}"
     image: "{{ outer_loop.image }}"
     instance_type: "{{ outer_loop.type }}"
-    vpc_subnet_id: "{{ cluster_subnet.subnet.id }}"
+    vpc_subnet_id: "{{ cloud_config.subnet_id }}"
     groups: "{{ outer_loop.security_groups }}"
     assign_public_ip: "{{ outer_loop.public_ip }}"
     key_name: "{{ cloud_config.ssh.keyname }}"
@@ -25,6 +25,12 @@
         delete_on_termination: true
       - device_name: /dev/xvdb
         ephemeral: ephemeral0
+      - device_name: /dev/xvdc
+        ephemeral: ephemeral1
+      - device_name: /dev/xvdd
+        ephemeral: ephemeral2
+      - device_name: /dev/xvde
+        ephemeral: ephemeral3
     count_tag:
       Group: "{{ cluster_name }}-{{ outer_loop.role }}"
     instance_tags:
@@ -46,56 +52,3 @@
   loop_control:
     loop_var: local_loop
   with_items: '{{ current_ec2.instances }}'
-
-- name: Unmounting /mnt
-  mount: name=/mnt src=/dev/xvdb fstype=ext4 state=absent
-  with_items: '{{ current_ec2.instances }}'
-
-- name: Loading list of devices
-  uri:
-    url: "http://169.254.169.254/2016-06-30/meta-data/block-device-mapping/"
-    return_content: yes
-  register: devices
-  with_items: '{{ current_ec2.instances }}'
- 
-- name: Load ephemeral device names
-  uri:
-    url: "http://169.254.169.254/2016-06-30/meta-data/block-device-mapping/{{local_loop}}"
-    return_content: yes
-  loop_control:
-    loop_var: local_loop
-  with_items: "{{devices.content.split('\n')}}"
-  when: local_loop.startswith('ephemeral')
-  register: device_names
- 
-- name: Create list of device names
-  set_fact:
-    ephs: "{{ device_names.results | selectattr('content', 'defined') | map(attribute='content') | map('regex_replace', '^sd', '/dev/xvd') | list }}"
- 
-- name: Create volume group
-  lvg: vg=vg.eph pvs="{{ephs | join(',')}}" state=present
-  loop_control:
-    loop_var: local_loop
-  with_items: '{{ current_ec2.instances }}'
-#  when: item.type == 'd2.xlarge'
- 
-- name: Create logical volume
-  lvol: vg=vg.eph lv=eph size=100%VG state=present opts="-i{{ephs | length}}"
-  loop_control:
-    loop_var: local_loop
-  with_items: '{{ current_ec2.instances }}'
-#  when: item.type == 'd2.xlarge'
- 
-- name: Format logical volume
-  filesystem: fstype=ext4 dev=/dev/vg.eph/eph
-  loop_control:
-    loop_var: local_loop
-  with_items: '{{ current_ec2.instances }}'
-#  when: item.type == 'd2.xlarge'
- 
-- name: Mount logical volume
-  mount: name=/hadoop src=/dev/vg.eph/eph fstype=ext4 state=mounted
-  loop_control:
-    loop_var: local_loop
-  with_items: '{{ current_ec2.instances }}'
-#  when: item.type == 'd2.xlarge'
